@@ -2,12 +2,14 @@ package com.godcoder.myrest.controller;
 
 import com.godcoder.myrest.model.Board;
 import com.godcoder.myrest.repository.BoardRepository;
+import com.godcoder.myrest.service.BoardService;
 import com.godcoder.myrest.validator.BoardValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,9 @@ public class BoardController {
 
     @Autowired
     private BoardRepository boardRepository;
+
+    @Autowired
+    private BoardService boardService;
 
     @Autowired
     private BoardValidator boardValidator;
@@ -56,13 +61,14 @@ public class BoardController {
     }
 
     @PostMapping("/form")
-    public String greetingSubmit(@Valid Board board, BindingResult bindingResult) {
+    public String greetingSubmit(@Valid Board board, BindingResult bindingResult, Authentication authentication) {
         boardValidator.validate(board, bindingResult);
         if (bindingResult.hasErrors()) {
             return "board/form";
         }
-        board.setUser(user);
-        boardRepository.save(board);
+        final String username = authentication.getName();
+        boardService.save(username, board);
+        //boardRepository.save(board);
         return "redirect:/board/list";
     }
 }

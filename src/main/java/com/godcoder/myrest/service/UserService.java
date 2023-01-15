@@ -15,12 +15,12 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
 
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public User save(User user) {
-        //final String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(user.getPassword());
+        final String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         user.setEnabled(true);
         final Role role = new Role();
         role.setId(1L);

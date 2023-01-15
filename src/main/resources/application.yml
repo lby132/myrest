@@ -5,7 +5,7 @@ spring:
     username: mess
     password: mess
 
-  security:
-    user:
-      name: lby
-      password: 123
+#  security:
+#    user:
+#      name: lby
+#      password: 123

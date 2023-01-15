@@ -1,5 +1,6 @@
 package com.godcoder.myrest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "user")
 public class User {
 
     @Id
@@ -25,11 +27,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles = new ArrayList<>();
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Board> boards = new ArrayList<>();
 }
