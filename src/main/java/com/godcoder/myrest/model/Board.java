@@ -21,5 +21,8 @@ public class Board {
     private String title;
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
