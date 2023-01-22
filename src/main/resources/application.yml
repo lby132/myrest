@@ -5,7 +5,13 @@ spring:
     username: mess
     password: mess
 
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
 #  security:
 #    user:
 #      name: lby
 #      password: 123
+
